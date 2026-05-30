@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.BillionaireEmpire" parent="android:Theme.Black.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">#06080F</item>
+        <item name="android:statusBarColor">#06080F</item>
+        <item name="android:navigationBarColor">#06080F</item>
+    </style>
+</resources>
