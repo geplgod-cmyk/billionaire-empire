@@ -220,6 +220,7 @@ class AppViewModel : ViewModel() {
         // Display balance tick — cosmetic only
         viewModelScope.launch {
             while (screen == AppScreen.Game) {
+                try {
                 delay(1000)
                 if (displayPassive > 0) displayBalance += displayPassive
                 secondsSinceLastServerTick++
@@ -228,6 +229,7 @@ class AppViewModel : ViewModel() {
                     sendPassiveTick(ctx, secondsSinceLastServerTick)
                     secondsSinceLastServerTick = 0
                 }
+                } catch (e: Exception) {}
             }
         }
 
@@ -446,12 +448,12 @@ class AppViewModel : ViewModel() {
     }
 
     fun onTap(ctx: Context) {
+        displayBalance += 1 // optimistic update
         viewModelScope.launch(Dispatchers.IO) {
-            val token = accessToken.ifBlank { SecureStorage.getAccessToken(ctx) ?: "" }
-            val r = ApiClient.rawPost("/api/actions/click", """{"amount":1}""", token)
-            if (r is ApiClient.Result.Success) {
-                withContext(Dispatchers.Main) { displayBalance += 1 }
-            }
+            try {
+                val token = accessToken.ifBlank { SecureStorage.getAccessToken(ctx) ?: "" }
+                ApiClient.rawPost("/api/actions/click", """{"amount":1}""", token)
+            } catch (e: Exception) { /* ignore */ }
         }
     }
 
