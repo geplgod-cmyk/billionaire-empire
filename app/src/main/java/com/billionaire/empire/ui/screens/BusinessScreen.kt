@@ -206,7 +206,7 @@ fun BusinessDetailSheet(p: BusinessPoint, vm: AppViewModel, ctx: Context, onDism
                                 .clickable{showRename=true}.padding(horizontal=8.dp,vertical=3.dp)){
                                 Text("✏️",fontSize=14.sp)}
                         }
-                        Text("${tmpl?.name_ru ?: ""},color=TextTert,fontSize=11.sp)
+                        Text("${tmpl?.name_ru ?: ""}",color=TextTert,fontSize=11.sp)
                     }
                     Badge("LV ${p.level}/${tmpl?.max_level ?:8}",Gold)
                 }
